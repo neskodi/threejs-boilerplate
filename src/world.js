@@ -43,12 +43,13 @@ export default class World {
   initScene() {
     this.scene = new THREE.Scene();
     this.scene.background = new THREE.Color(this.options.backgroundColor);
+    this.scene.name = 'Scene';
   }
 
   initCamera() {
     this.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
     this.camera.position.set(...this.options.cameraPosition);
-    this.camera.lookAt(new THREE.Vector3(...this.options.cameraLookAt));
+    this.camera.lookAt(...this.options.cameraLookAt);
   }
 
   initRenderer() {
@@ -88,16 +89,25 @@ export default class World {
 
     const dl = new THREE.DirectionalLight(0xffffff, 1);
     dl.position.set(...this.options.lightPosition);
+    dl.name = 'Directional light';
     lights.push(dl);
 
     return lights;
   }
 
   initGridHelper() {
+    let gh;
+
     if (true === this.options.grid) {
-      this.scene.add(new THREE.GridHelper(10, 10));
+      gh = new THREE.GridHelper(10, 10);
     } else if (Array.isArray(this.options.grid)) {
-      this.scene.add(new THREE.GridHelper(...this.options.grid));
+      gh = new THREE.GridHelper(...this.options.grid);
+    }
+
+    gh.name = 'Grid helper';
+
+    if (gh) {
+      this.scene.add(gh);
     }
   }
 
@@ -119,8 +129,8 @@ export default class World {
   initGui() {
     if ('object' === typeof this.options.gui) {
       this.gui = new GUI();
-      this.controls = ('object' === typeof this.options.gui.values)
-        ? this.options.gui.values
+      this.controls = ('object' === typeof this.options.gui.controls)
+        ? Object.assign({}, this.options.gui.controls)
         : {};
 
       this.gui.remember(this.controls);
@@ -137,7 +147,7 @@ export default class World {
     });
 
     if ('function' === typeof callback) {
-      callback(this);
+      callback.call(this);
     }
 
     if (this.orbit) {
@@ -147,8 +157,12 @@ export default class World {
     this.render();
   }
 
-  render() {
+  render(callback) {
     this.renderer.render(this.scene, this.camera);
+
+    if ('function' === typeof callback) {
+      callback.call(this);
+    }
   }
 
   exportToWindow() {

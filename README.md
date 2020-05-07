@@ -21,13 +21,25 @@ npm i
 
 Navigate to your index.html in the browser, and you should see a scene with a rotating cube.
 
-You can also serve it via a local server (starts an [http-server](https://www.npmjs.com/package/http-server) on localhost:8080):
+That's all you need, you can start working from here, while the rest of this document 
+describes advanced configurations and options.
+
+## Use a local server
+
+You can also serve it via a local server (starts an 
+[http-server](https://www.npmjs.com/package/http-server) on localhost:8080):
 
 ```shell script
 npm run serve
 ```
 
-If you change something in the src folder (although it's unlikely that you'll need to), you should rebuild it:
+This might come in handy if you load external files like models or textures via URLs 
+and your browser goes naughty. 
+
+## Modify the boilerplate itself
+
+If you change something in the src folder (although it's unlikely that you'll need to), 
+rebuild it:
 
 ```shell script
 npm run build
@@ -103,10 +115,12 @@ const threeJsOptions = {
 }
 ```
 
-All lights created here will be accessible as World.lights in your scripts.js.
+In this case it is your responsibility to name your lights and adjust their positions.
+
+All lights created here will be accessible as ```World.lights``` in your scripts.js.
 
 You can also turn off all lighting by setting `lights` to false and then work with
-your own lights as you see fit. 
+your own lights as you see fit directly in scripts.js. 
 
 #### Grid
 
@@ -116,7 +130,7 @@ dimensions as well:
 ```javascript
 const threeJsOptions = {
   // ...
-  grid: [100, 100],
+  grid: [50, 50],
   // ...
 }
 ```
@@ -124,9 +138,9 @@ const threeJsOptions = {
 #### Drag
 
 Setting to true will enable dragging objects across the scene. In order for an
-Object3D to be draggable it needs to be added to World.draggableObjects array:
+Object3D to be draggable it needs to be added to ```World.draggableObjects``` array:
 
-- in index.html:
+-- in index.html:
 ```javascript
 const threeJsOptions = {
   // ...
@@ -135,7 +149,7 @@ const threeJsOptions = {
 }
 ```
 
-- then in scripts.js:
+-- then in scripts.js:
 
 ```javascript
 World.draggableObjects.push(someMesh);
@@ -143,6 +157,7 @@ World.draggableObjects.push(someMesh);
 
 Note that you don't normally want to enable both orbit and drag at the same time,
 because they both will react to your mouse movement, and the result will be messy.
+To disable orbit controls (they are enabled by default), set ```orbit``` to false.
 
 #### Gui
 
@@ -150,12 +165,12 @@ Bundled dat.gui enables you to use visual controls to change values and react to
 changes in your scene. A simple example adds a slider called "rotate" with a range
 from 1 to 180:
 
-- in index.html:
+-- in index.html:
 ```javascript
 const threeJsOptions = {
   // ...
   gui: {
-   values: {
+   controls: {
      rotate: 50
    },
    setup: (gui, controls) => {
@@ -166,7 +181,7 @@ const threeJsOptions = {
 }
 ```
 
-- then in scripts.js you can access it as ```World.controls.rotate```. For example:
+-- then in scripts.js you can access it as ```World.controls.rotate```. For example:
 
 ```javascript
 const geometry = new THREE.BoxGeometry(2, 2, 2, 4, 4, 4);
@@ -175,16 +190,16 @@ const cubeMesh = new THREE.Mesh(geometry, material);
 
 scene.add(cubeMesh);
 
-animate(World => {
+animate(() => {
   cubeMesh.rotation.y = THREE.MathUtils.degToRad(World.controls.rotate);
 });
 ```
 
 Read more about dat.gui [here](https://github.com/dataarts/dat.gui).
 
-## Work
+## Use
 
-After the scene has been configured to your liking, you are welcome to go ahead
+After the scene has been configured to your liking, just go ahead
 and do your own stuff in scripts.js.
 
 There are objects that are exported globally for convenience. They are available
@@ -195,21 +210,43 @@ under the ```window``` namespace.
 controls, etc.
 - ```scene```: the scene (same as ```World.scene```)
 
+For example here's how you add a cube and start spinning it slowly:
+
+-- scripts.js
+```javascript
+const geometry = new THREE.BoxGeometry(2, 2, 2, 4, 4, 4);
+const material = new THREE.MeshPhongMaterial({ color: 0x333333 });
+const cubeMesh = new THREE.Mesh(geometry, material);
+
+cubeMesh.position.y = 1;
+
+scene.add(cubeMesh);
+
+animate(() => {
+  cubeMesh.rotation.y += 0.01;
+});
+```
+
+Note that you have to call either ```animate()``` or ```render()``` in the end 
+for the scene to appear.
+
 #### Render loop and animation
 
 The ```animate``` helper function is available globally. Implicitly, it calls
 ```World.animate()```. Pass a callback if you want to execute something inside the render loop. 
-The callback will receive the entire World as its argument.
+The callback will be executed before each frame is rendered 
+(remember that in most cases, it happens 60 times per second).
 
-In order to render a static scene without starting the render loop, call ```World.render()```
-instead of ```animate()```. Note that in this case, no orbit, no gui, and no animation
-will be possible. You are just taking a photo.
+In order to render a static scene just once, without starting the render loop, call ```render()```
+instead of ```animate()```. Note that in this case, no orbit, no drag, no gui, and no animation
+will be possible. You are in fact just taking a photo. Like with ```animate()```, you may pass a
+callback that will be executed once the render is done.
 
-Either ```animate()``` or ```World.render()``` must be called for the scene to become visible.
+Either ```animate()``` or ```render()``` MUST be called for the scene to become visible.
 
 #### Using the three.js inspector Chrome extension
 
 If installed, 
 [Three.js inspector](https://chrome.google.com/webstore/detail/threejs-inspector/dnhjfclbfhcbcdfpjaeacomhbdfjbebi?hl=en) 
-will start automatically, because ```window.THREE``` and ```window.scene``` are exported 
-when the World starts. 
+will pick things up automatically, because ```window.THREE``` and ```window.scene``` 
+are exported when the World starts. 
