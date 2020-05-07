@@ -148,7 +148,7 @@ because they both will react to your mouse movement, and the result will be mess
 
 Bundled dat.gui enables you to use visual controls to change values and react to
 changes in your scene. A simple example adds a slider called "rotate" with a range
-from 1 to 100:
+from 1 to 180:
 
 - in index.html:
 ```javascript
