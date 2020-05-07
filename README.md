@@ -146,7 +146,8 @@ because they both will react to your mouse movement, and the result will be mess
 #### Gui
 
 Bundled dat.gui enables you to use visual controls to change values and react to
-changes in your scene. A simple example adds a slider from 1 to 100:
+changes in your scene. A simple example adds a slider called "rotate" with a range
+from 1 to 100:
 
 - in index.html:
 ```javascript
@@ -164,7 +165,7 @@ const threeJsOptions = {
 }
 ```
 
-- then in scripts.js:
+- then in scripts.js you can access it as World.controls.rotate. For example:
 
 ```javascript
 const geometry = new THREE.BoxGeometry(2, 2, 2, 4, 4, 4);
