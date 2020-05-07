@@ -14,7 +14,7 @@
 /** ALL RIGHT AND THIS IS YOUR PLAYGROUND. HAVE FUN **/
 
 const geometry = new THREE.BoxGeometry(2, 2, 2, 4, 4, 4);
-const material = new THREE.MeshPhongMaterial({ color: 0x22EF66, specular: 0xEFEFEF });
+const material = new THREE.MeshPhongMaterial({ color: 0x333333 });
 const cubeMesh = new THREE.Mesh(geometry, material);
 
 cubeMesh.position.y = 1;

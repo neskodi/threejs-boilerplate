@@ -8,8 +8,7 @@ This is a simple starter template for a three.js project. Here's what it does:
 - Lets you add dat.gui for dynamically adjusting values on your scene;
 - Automatically exports THREE and scene for use with the [Three.js inspector](https://chrome.google.com/webstore/detail/threejs-inspector/dnhjfclbfhcbcdfpjaeacomhbdfjbebi?hl=en) Chrome extension.
 
-In other words, all the tedious stuff that you are bored of doing every time 
-when starting with a new three.js scene.
+In other words, it does the boring stuff so you can do the cool stuff right away.
 
 ## Install
 
@@ -19,15 +18,15 @@ cd threejs-boilerplate
 npm i
 ```
 
-Navigate to your index.html in the browser and you should see stuff. 
+Navigate to your index.html in the browser, and you should see a scene with a rotating cube.
 
-You can also serve it via a local server:
+You can also serve it via a local server (starts an [http-server](https://www.npmjs.com/package/http-server) on localhost:8080):
 
 ```shell script
 npm run serve
 ```
 
-If you change something in the src folder, you should rebuild it:
+If you change something in the src folder (although it's unlikely that you'll need to), you should rebuild it:
 
 ```shell script
 npm run build
@@ -49,9 +48,11 @@ Example (and default) values for all supported options are listed below.
 ```javascript
 const threeJsOptions = {
         antialias: true,
-        lights: true,
         cameraPosition: [0, 5, 5],
         cameraLookAt: [0, 0, 0],
+        
+        lights: true,
+        lightPosition: [-200, 200, 200],
 
         // scene background color
         backgroundColor: 0xECECEC,
@@ -72,9 +73,20 @@ const threeJsOptions = {
 
 #### Lights
 
-Lights can be specified as true (by default it's an ```AmbientLight(0xffffff, 1)```),
-false (no lights by default), or a function that will return the needed lights.
-You may return a single light object, or an array of light objects.
+By default, the light is on, and it's a white directional light shining from 200, 200, 200.
+
+If you need to adjust its position:
+
+```javascript
+const threeJsOptions = {
+    // ...
+    lightPosition: [100, 100, 100],
+    // ...
+}
+```
+
+Another option is to create a function that will return the needed lights.
+You may return either a single light object, or an array of light objects.
 Example:
 
 ```javascript
@@ -85,12 +97,15 @@ const threeJsOptions = {
       new THREE.SpotLight(0xffffff, 5, 10, Math.PI / 8),
       new THREE.DirectionalLight(0xffffff, 1)
     ];
-  }
+  },
   // ...
 }
 ```
 
-All lights created here will be accessible as World.lights in your scripts.js. 
+All lights created here will be accessible as World.lights in your scripts.js.
+
+You can also turn off all lighting by setting `lights` to false and then work with
+your own lights as you see fit. 
 
 #### Grid
 
@@ -100,7 +115,7 @@ dimensions as well:
 ```javascript
 const threeJsOptions = {
   // ...
-  grid: [100, 100]
+  grid: [100, 100],
   // ...
 }
 ```
@@ -114,7 +129,7 @@ Object3D to be draggable it needs to be added to World.draggableObjects array:
 ```javascript
 const threeJsOptions = {
   // ...
-  drag: true
+  drag: true,
   // ...
 }
 ```
@@ -144,7 +159,7 @@ const threeJsOptions = {
    setup: (gui, controls) => {
      gui.add(controls, 'rotate').min(1).max(180);
    }
- }
+ },
   // ...
 }
 ```

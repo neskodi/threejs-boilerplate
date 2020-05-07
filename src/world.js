@@ -28,6 +28,7 @@ export default class World {
       lights: true,
       cameraPosition: [0, 5, 5],
       cameraLookAt: [0, 0, 0],
+      lightPosition: [-200, 200, 200],
       backgroundColor: 0xECECEC,
       grid: true,
       orbit: true,
@@ -71,7 +72,7 @@ export default class World {
     this.lights = [];
 
     if (true === this.options.lights) {
-      this.lights.push(new THREE.AmbientLight(0xffffff, 1));
+      this.lights = this.defaultLights();
     } else if ('function' === typeof this.options.lights) {
       let l = this.options.lights(THREE);
       this.lights = (Array.isArray(l)) ? l : [l];
@@ -80,6 +81,16 @@ export default class World {
     for (let l of this.lights) {
       this.scene.add(l);
     }
+  }
+
+  defaultLights() {
+    const lights = [];
+
+    const dl = new THREE.DirectionalLight(0xffffff, 1);
+    dl.position.set(...this.options.lightPosition);
+    lights.push(dl);
+
+    return lights;
   }
 
   initGridHelper() {
