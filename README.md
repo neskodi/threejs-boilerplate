@@ -21,8 +21,8 @@ npm i
 
 Navigate to your index.html in the browser, and you should see a scene with a rotating cube.
 
-That's all you need, you can start working from here, while the rest of this document 
-describes advanced configurations and options.
+That's all you need, you can start working with scripts.js from here, 
+while the rest of this document describes advanced configurations and options.
 
 ## Use a local server
 
