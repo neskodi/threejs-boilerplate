@@ -21,6 +21,8 @@ cubeMesh.position.y = 1;
 
 scene.add(cubeMesh);
 
+// You must call either animate() or World.render() in the end, in order for the
+// scene to be visible.
 animate(World => {
   // this will be called before rendering each animation frame.
   // apply your per-frame animations here.

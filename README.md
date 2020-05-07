@@ -195,11 +195,17 @@ under the ```window``` namespace.
 controls, etc.
 - ```scene```: the scene (same as ```World.scene```)
 
-#### Animation
+#### Render loop and animation
 
 The ```animate``` helper function is available globally. Implicitly, it calls
 ```World.animate()```. Pass a callback if you want to execute something inside the render loop. 
 The callback will receive the entire World as its argument.
+
+In order to render a static scene without starting the render loop, call ```World.render()```
+instead of ```animate()```. Note that in this case, no orbit, no gui, and no animation
+will be possible. You are just taking a photo.
+
+Either ```animate()``` or ```World.render()``` must be called for the scene to become visible.
 
 #### Using the three.js inspector Chrome extension
 
