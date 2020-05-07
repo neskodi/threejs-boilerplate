@@ -165,7 +165,7 @@ const threeJsOptions = {
 }
 ```
 
-- then in scripts.js you can access it as World.controls.rotate. For example:
+- then in scripts.js you can access it as ```World.controls.rotate```. For example:
 
 ```javascript
 const geometry = new THREE.BoxGeometry(2, 2, 2, 4, 4, 4);
