@@ -74,7 +74,7 @@ const threeJsOptions = {
 
 #### Lights
 
-By default, the light is on, and it's a white directional light shining from 200, 200, 200.
+By default, the light is on, and it's a white directional light shining from -200, 200, 200.
 
 If you need to adjust its position:
 
