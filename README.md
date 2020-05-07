@@ -192,7 +192,7 @@ under the ```window``` namespace.
 - ```THREE```: the entire three.js library.
 - ```World```: the World object that stores the camera, renderer, scene, configured lights,
 controls, etc.
-- ```scene```: the scene
+- ```scene```: the scene (same as ```World.scene```)
 
 #### Animation
 
