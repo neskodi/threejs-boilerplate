@@ -6,7 +6,8 @@ This is a simple starter template for a three.js project. Here's what it does:
 - Optionally adds a grid helper;
 - Lets you add orbit or drag controls;
 - Lets you add dat.gui for dynamically adjusting values on your scene;
-- Automatically exports THREE and scene for use with the [Three.js inspector](https://chrome.google.com/webstore/detail/threejs-inspector/dnhjfclbfhcbcdfpjaeacomhbdfjbebi?hl=en) Chrome extension.
+- Automatically exports THREE and scene for use with the [Three.js inspector](https://chrome.google.com/webstore/detail/threejs-inspector/dnhjfclbfhcbcdfpjaeacomhbdfjbebi?hl=en) Chrome extension;
+- Starts the render loop.
 
 In other words, it does the boring stuff so you can do the cool stuff right away.
 
@@ -197,11 +198,10 @@ controls, etc.
 #### Animation
 
 The ```animate``` helper function is available globally. Implicitly, it calls
-World.animate(). Pass a callback if you want to execute something before each
-animation frame is rendered. The callback will receive the entire World as its 
-argument.  
+```World.animate()```. Pass a callback if you want to execute something inside the render loop. 
+The callback will receive the entire World as its argument.
 
-#### Using three.js inspector Chrome extension
+#### Using the three.js inspector Chrome extension
 
 If installed, 
 [Three.js inspector](https://chrome.google.com/webstore/detail/threejs-inspector/dnhjfclbfhcbcdfpjaeacomhbdfjbebi?hl=en) 
