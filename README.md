@@ -244,6 +244,30 @@ callback that will be executed once the render is done.
 
 Either ```animate()``` or ```render()``` MUST be called for the scene to become visible.
 
+#### Adding examples from the three library
+
+Many features of three.js are not part of the core and have to be loaded separately. 
+For instance, texture and object loaders, etc. More often than not, those are located 
+in the "examples" folder of three.js source. 
+
+Occasionally, you might want to add such a feature to your project. In this case,
+all you need to do is just insert the respective script after the main.js is loaded,
+pointing its ```src``` to its location inside the ```node_modules/three``` folder. 
+After that, you can use the addon normally, via the THREE namespace.
+
+The example below illustrates loading the GLTFLoader:
+
+-- in index.html    
+```html
+<script src="dist/main.js"></script>
+<script src="node_modules/three/examples/js/loaders/GLTFLoader.js"></script>
+```
+
+-- in scripts.js, after that:
+```javascript
+const gltfloader = new THREE.GLTFLoader();
+```
+
 #### Using the three.js inspector Chrome extension
 
 If installed, 
