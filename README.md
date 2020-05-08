@@ -1,5 +1,6 @@
 This is a simple starter template for a three.js project. Here's what it does:
 
+- Pulls in the latest version of three.js;
 - Sets up a camera, scene, and renderer;
 - Adjusts things automatically when window resizes;
 - Optionally adds some lights;
