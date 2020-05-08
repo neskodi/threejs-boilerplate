@@ -91,9 +91,9 @@ const threeJsOptions = {
 
 The boilerplate offers 2 camera options: a position and a target (lookAt). Both
 are expected as simple [x, y, z] arrays. Note that ```cameraLookAt``` won't work if 
-```orbit``` is set to true because orbit controls reset the camera target. If you
-want to use the ```cameraLookAt``` option, then set ```orbit``` to false.
-
+```orbit``` is set to true (which by default it is) because orbit controls reset 
+the camera target. If you want to use the ```cameraLookAt``` option, then set 
+```orbit``` to false.
 
 #### Lights
 
