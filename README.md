@@ -22,7 +22,7 @@ npm i
 
 Navigate to your index.html in the browser, and you should see a scene with a rotating cube.
 
-That's all you need, you can start working with scripts.js from here, 
+That's all you need, you can start working in scripts.js from here, 
 while the rest of this document describes advanced configurations and options.
 
 ## Use a local server
@@ -262,12 +262,31 @@ The example below illustrates loading the GLTFLoader:
 ```html
 <script src="dist/main.js"></script>
 <script src="node_modules/three/examples/js/loaders/GLTFLoader.js"></script>
+<script src="scripts.js"></script>
 ```
 
 -- in scripts.js, after that:
 ```javascript
 const gltfloader = new THREE.GLTFLoader();
 ```
+
+Or if you prefer the module way, do not add the extra script tag, instead change
+the type of scripts.js to ```module```:
+
+-- in index.html    
+```html
+<script src="dist/main.js"></script>
+<script src="scripts.js" type="module"></script>
+```
+
+-- in scripts.js (note the use of jsm version instead of js): 
+```javascript
+import {GLTFLoader} from "./three/examples/jsm/loaders/GLTFLoader.js"; 
+
+const gltfloader = new GLTFLoader();
+```
+
+Remember that support of real-time imports [varies across browsers](https://caniuse.com/#feat=es6-module-dynamic-import). 
 
 #### Using the three.js inspector Chrome extension
 
