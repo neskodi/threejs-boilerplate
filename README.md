@@ -63,8 +63,10 @@ Example (and default) values for all supported options are listed below.
 const threeJsOptions = {
         antialias: true,
         cameraPosition: [0, 5, 5],
+
+        // cameraLookAt only works when orbit controls are off.
         cameraLookAt: [0, 0, 0],
-        
+
         lights: true,
         lightPosition: [-200, 200, 200],
 
@@ -84,6 +86,14 @@ const threeJsOptions = {
         gui: false
 }
 ```
+
+#### Camera
+
+The boilerplate offers 2 camera options: a position and a target (lookAt). Both
+are expected as simple [x, y, z] arrays. Note that ```cameraLookAt``` won't work if 
+```orbit``` is set to true because orbit controls reset the camera target. If you
+want to use the ```cameraLookAt``` option, then set ```orbit``` to false.
+
 
 #### Lights
 
