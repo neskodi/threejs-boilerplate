@@ -266,6 +266,8 @@ all you need to do is just insert the respective script after the main.js is loa
 pointing its ```src``` to its location inside the ```node_modules/three``` folder. 
 After that, you can use the addon normally, via the THREE namespace.
 
+###### The oldschool way
+
 The example below illustrates loading the GLTFLoader:
 
 -- in index.html    
@@ -280,7 +282,9 @@ The example below illustrates loading the GLTFLoader:
 const gltfloader = new THREE.GLTFLoader();
 ```
 
-Or if you prefer the module way, do not add the extra script tag, instead change
+###### The ES6 way
+
+If you prefer to use real-time modules, do not add the extra script tag, instead change
 the type of scripts.js to ```module```:
 
 -- in index.html    
@@ -291,7 +295,7 @@ the type of scripts.js to ```module```:
 
 -- in scripts.js (note the use of jsm version instead of js): 
 ```javascript
-import {GLTFLoader} from "./three/examples/jsm/loaders/GLTFLoader.js"; 
+import {GLTFLoader} from "./node_modules/three/examples/jsm/loaders/GLTFLoader.js"; 
 
 const gltfloader = new GLTFLoader();
 ```
