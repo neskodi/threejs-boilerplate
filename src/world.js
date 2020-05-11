@@ -2,6 +2,8 @@ import * as THREE from "three";
 
 import {OrbitControls} from "three/examples/jsm/controls/OrbitControls";
 import {DragControls} from "three/examples/jsm/controls/DragControls";
+import {TransformControls} from "three/examples/jsm/controls/TransformControls";
+
 import {GUI} from "dat.gui";
 
 export default class World {
@@ -18,6 +20,7 @@ export default class World {
     this.initGridHelper();
     this.initOrbitControls();
     this.initDragControls();
+    this.initTransformControls();
     this.initGui();
     this.exportToWindow();
   }
@@ -26,15 +29,21 @@ export default class World {
     return {
       antialias: true,
       lights: true,
+
+      // camera
+      // cameraLookAt doesn't work together with orbit
       cameraPosition: [0, 5, 5],
       cameraLookAt: [0, 0, 0],
+
       lightPosition: [-200, 200, 200],
       backgroundColor: 0xECECEC,
       grid: true,
-      orbit: true,
 
-      // you don't want to enable both drag and orbit at the same time
+      // controls
+      // you don't want to enable orbit and other types of controls at the same time
+      orbit: true,
       drag: false,
+      transform: false,
 
       gui: false
     }
@@ -122,7 +131,31 @@ export default class World {
 
     if (this.options.drag) {
       // don't forget to push your objects to World.draggableObjects
-      new DragControls(this.draggableObjects, this.camera, this.renderer.domElement);
+      this.drag = new DragControls(this.draggableObjects, this.camera, this.renderer.domElement);
+    }
+  }
+
+  makeObjectDraggable(object3D) {
+    if (this.drag) {
+      this.draggableObjects.push(object3D);
+    } else {
+      console.warn('Drag controls are not enabled');
+    }
+  }
+
+  initTransformControls() {
+    if (this.options.transform) {
+      this.transform = new TransformControls(this.camera, this.renderer.domElement);
+    }
+  }
+
+  attachTransformControlsTo(object3D, mode = 'translate') {
+    if (this.transform) {
+      this.transform.mode = mode;
+      this.transform.attach(object3D);
+      this.scene.add(this.transform);
+    } else {
+      console.warn('Transform controls are not enabled');
     }
   }
 

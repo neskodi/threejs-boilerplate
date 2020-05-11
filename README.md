@@ -81,6 +81,9 @@ const threeJsOptions = {
   
         // whether to enable object dragging controls
         drag: false,
+
+        // whether to enable object transform controls
+        transform: false,
   
         // whether to enable gui controls and what to put there
         gui: false
@@ -146,7 +149,7 @@ const threeJsOptions = {
 }
 ```
 
-#### Drag
+#### Drag controls
 
 Setting to true will enable dragging objects across the scene. In order for an
 Object3D to be draggable it needs to be added to ```World.draggableObjects``` array:
@@ -163,10 +166,40 @@ const threeJsOptions = {
 -- then in scripts.js:
 
 ```javascript
-World.draggableObjects.push(someMesh);
+World.makeObjectDraggable(someMesh);
 ```
 
 Note that you don't normally want to enable both orbit and drag at the same time,
+because they both will react to your mouse movement, and the result will be messy.
+To disable orbit controls (they are enabled by default), set ```orbit``` to false.
+
+#### Transform controls
+
+Setting to true makes it possible to attach transform controls to objects.
+
+-- in index.html:
+```javascript
+const threeJsOptions = {
+  // ...
+  transform: true,
+  // ...
+}
+```
+
+-- then in scripts.js:
+
+```javascript
+World.attachTransformControlsTo(someMesh);
+```
+
+By default, controls are in the 'translate' mode. You can pass the mode as the second
+argument:
+
+```javascript
+World.attachTransformControlsTo(someMesh, 'rotate');
+```
+
+Note that you don't normally want to enable both orbit and transform at the same time,
 because they both will react to your mouse movement, and the result will be messy.
 To disable orbit controls (they are enabled by default), set ```orbit``` to false.
 
@@ -193,7 +226,6 @@ const threeJsOptions = {
 ```
 
 -- then in scripts.js you can access it as ```World.controls.rotate```. For example:
-
 ```javascript
 const geometry = new THREE.BoxGeometry(2, 2, 2, 4, 4, 4);
 const material = new THREE.MeshPhongMaterial({ color: 0x22EF66, specular: 0xEFEFEF });
@@ -293,7 +325,7 @@ the type of scripts.js to ```module```:
 <script src="scripts.js" type="module"></script>
 ```
 
--- in scripts.js (note the use of jsm version instead of js): 
+-- in scripts.js (note the use of jsm version instead of js, as well as .js extension at the end): 
 ```javascript
 import {GLTFLoader} from "./node_modules/three/examples/jsm/loaders/GLTFLoader.js"; 
 
